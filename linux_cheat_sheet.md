@@ -126,3 +126,7 @@ df -h
 sudo rpi-update
 ```
 
+## Remote Desktop Ubuntu - Windows
+
+https://askubuntu.com/a/592544
+
