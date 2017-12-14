@@ -1,0 +1,37 @@
+# SSH Cheat Sheet
+
+## Step 1 - Setup public SSH keys
+
+On our origin server, we will generate public SSH keys with no password:
+
+```
+ssh-keygen -f ~/.ssh/id_rsa -q -P ""
+cat ~/.ssh/id_rsa.pub
+```
+
+This is our public SSH key that can be placed on other hosts to give us access:
+
+```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLVDBIpdpfePg/a6h8au1HTKPPrg8wuTrjdh0QFVPpTI4KHctf6/FGg1NOgM++hrDlbrDVStKn/b3Mu65//tuvY5SG9sR4vrINCSQF++a+YRTGU6Sn4ltKpyj3usHERvBndtFXoDxsYKRCtPfgm1BGTBpoSl2A7lrwnmVSg+u11FOa1xSZ393aaBFDSeX8GlJf1SojWYIAbE25Xe3z5L232vZ5acC2PJkvKctzvUttJCP91gbNe5FSwDolE44diYbNYqEtvq2Jt8x45YzgFSVKf6ffnPwnUDwhtvc2f317TKx9l2Eq4aWqXTOMiPFA5ZRM/CF0IJCqeXG6s+qVfRjB root@cloudads
+```
+
+Copy this key to your clipboard and login to your destination server.
+
+Place this SSH key into your ~/.ssh/authorized_keys file:
+
+If your SSH folder does not exist, create it manually:
+
+```
+mkdir ~/.ssh
+chmod 0700 ~/.ssh
+touch ~/.ssh/authorized_keys
+chmod 0644 ~/.ssh/authorized_keys
+```
+
+## PUTTYgen
+
+In order to use the public key in PUTTY and to connect to a linux host in that way, you have to convert it from OpenSSH format (.pem) to putty-format (.ppk).
+
+In order to do that, start PUTTYgen, load your OpenSSH key and choose 'save public key as...' and save it as .ppk file.
+
+Import that in putty and add it under 'auth' in the connection preferences. When logging in, you just have to specify the right username and you're connected.
