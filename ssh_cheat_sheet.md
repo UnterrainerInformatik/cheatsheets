@@ -35,3 +35,10 @@ In order to use the public key in PUTTY and to connect to a linux host in that w
 In order to do that, start PUTTYgen, load your OpenSSH key and choose 'save public key as...' and save it as .ppk file.
 
 Import that in putty and add it under 'auth' in the connection preferences. When logging in, you just have to specify the right username and you're connected.
+
+## rsync
+
+```bash
+rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1
+```
+
