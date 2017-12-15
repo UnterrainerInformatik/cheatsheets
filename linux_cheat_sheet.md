@@ -101,6 +101,9 @@ sudo mkdir /mnt/localshare
 sudo mount <ip_or_name>:/mnt/share /mnt/localshare
 # Example:
   sudo mount radagast.zebra-servers:/mnt/Backup1 /mnt/rada
+  
+# Example NFS mount in fstab (intr is deprecated and don't mount write-vols with soft):
+radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    0       0
 ```
 
 ## SAMBA
@@ -125,6 +128,21 @@ df -h
 ```bash
 sudo rpi-update
 ```
+
+## PROCESSES
+
+```bash
+sudo ps fuxwa
+# (process representation with parent-indicator)
+sudo ps aux
+# (list of processes)
+sudo ps aux | grep rsync
+# (list of all processes containing 'rsync')
+ctop
+# (graphical representation of all running tasks with CPU and MEM bars)
+```
+
+
 
 ## Remote Desktop Ubuntu - Windows
 
