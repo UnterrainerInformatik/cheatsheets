@@ -39,7 +39,7 @@ Import that in putty and add it under 'auth' in the connection preferences. When
 ## rsync
 
 ```bash
-rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1
+rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1 >> /var/log/rsyncToUnterrainerInformatik.log 2>&1
 ```
 
 ### Security Issues
@@ -55,5 +55,42 @@ sudo nano /etc/sudoers
 zebra ALL=NOPASSWD:/usr/bin/rsync
 # Then you're able to change your script to:
 sudo rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --rsync-path="sudo rsync" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1
+```
+
+### Stacking Executions As cron job
+
+When executing as cron job the script could be started a second time, although the last instance is already running (because it didn't finish by now). To circumvent that, you can use a lock-file.
+
+Write a wrapper-script that calls your original script like so:
+
+```bash
+flock -n /tmp/rsync-to-unterrainer.lockfile ~/rsyncToUnterrainerInformatik.sh
+# The -n option tells it to just abort the new instance if no lock could be obtained.
+```
+
+Now let's build a cron job for that wrapper.
+
+```bash
+crontab -e
+# Edits the cron-file for the current user
+crontab -u <user_name> -e
+# Edits the cron-file for the given user
+
+# Add to log to dev/null (error&stdout): > /dev/null 2>&1
+# Add log to syslog:  | /usr/bin/logger -t <command_display_name>
+#    you then can follow it with tail -f /var/log/syslog
+00 23 * * TUE /home/zebra/rsyncToUnterrainerInformatikLocked.sh | /usr/bin/logger -t copy_backup_to_unterrainer
+# (starts every 23:00 on every tuesday)
+*/05 * * * * /home/zebra/rsyncToUnterrainerInformatikLocked.sh | /usr/bin/logger -t copy_backup_to_unterrainer
+# (starts every 5 minutes)
+```
+
+Now you can watch the script at work, along with the error output, by tailing the syslog.
+
+And you can see if the script is currently running with:
+
+```bash
+ll /tmp
+# As long as the file rsync-to-unterrainer.lockfile is present, no other task will start
 ```
 
