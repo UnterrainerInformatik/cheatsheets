@@ -42,3 +42,18 @@ Import that in putty and add it under 'auth' in the connection preferences. When
 rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1
 ```
 
+### Security Issues
+
+For `rsync` to be able to copy all data in that partition that could come from `rsnapshot` for instance, you'll have do `sudo` the `rsync` call. Otherwise you won't have the permission to read the files on your backup volume since the data there comes from many different users and the user-privileges  
+
+To be able to do that in a script (otherwise it would prompt you for a password, which would be moot since it's a script), you have to change the `/etc/sudoers` list so that the `sudo` call to `rsync` on your copy-source location (where you start the script) doesn't need a password-entry.
+
+```bash
+# Let's say your user running the script will be 'zebra'...
+sudo nano /etc/sudoers
+# Add the following line:
+zebra ALL=NOPASSWD:/usr/bin/rsync
+# Then you're able to change your script to:
+sudo rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --rsync-path="sudo rsync" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1
+```
+
