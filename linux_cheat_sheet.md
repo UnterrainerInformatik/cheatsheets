@@ -142,6 +142,14 @@ ctop
 # (graphical representation of all running tasks with CPU and MEM bars)
 ```
 
+## PRIVILEGES
+
+```bash
+sudo nano /etc/sudoers
+# Add the next line to allow the user 'pi' to sudo all commands without a password.
+pi ALL=(ALL) NOPASSWD: ALL
+```
+
 
 
 ## Remote Desktop Ubuntu - Windows

@@ -75,8 +75,8 @@ keytool -keypasswd -new changeit -keystore c:/data/server/stash/cacerts -storepa
 keytool -v -printcert -file ca.der
 # Import the root certificate into the JVM trust store
 keytool -importcert -alias startssl -keystore c:/data/server/stash/cacerts -storepass changeit -file ca.der
-		# (the default password for the CA store is changeit)
-		# The keytool will prompt you for confirmation, enter yes to complete the operation.
+  # (the default password for the CA store is changeit)
+  # The keytool will prompt you for confirmation, enter yes to complete the operation.
 # Verify that the root certificate has been imported
 keytool -keystore "c:/data/server/stash/cacerts" -storepass changeit -list | grep startssl
 ```

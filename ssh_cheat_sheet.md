@@ -4,14 +4,14 @@
 
 On our origin server, we will generate public SSH keys with no password:
 
-```
+```bash
 ssh-keygen -f ~/.ssh/id_rsa -q -P ""
 cat ~/.ssh/id_rsa.pub
 ```
 
 This is our public SSH key that can be placed on other hosts to give us access:
 
-```
+```bash
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLVDBIpdpfePg/a6h8au1HTKPPrg8wuTrjdh0QFVPpTI4KHctf6/FGg1NOgM++hrDlbrDVStKn/b3Mu65//tuvY5SG9sR4vrINCSQF++a+YRTGU6Sn4ltKpyj3usHERvBndtFXoDxsYKRCtPfgm1BGTBpoSl2A7lrwnmVSg+u11FOa1xSZ393aaBFDSeX8GlJf1SojWYIAbE25Xe3z5L232vZ5acC2PJkvKctzvUttJCP91gbNe5FSwDolE44diYbNYqEtvq2Jt8x45YzgFSVKf6ffnPwnUDwhtvc2f317TKx9l2Eq4aWqXTOMiPFA5ZRM/CF0IJCqeXG6s+qVfRjB root@cloudads
 ```
 
@@ -21,18 +21,30 @@ Place this SSH key into your ~/.ssh/authorized_keys file:
 
 If your SSH folder does not exist, create it manually:
 
-```
+```bash
 mkdir ~/.ssh
 chmod 0700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 0644 ~/.ssh/authorized_keys
 ```
 
+Alternatively you can use this command to copy the local key to the remote server:
+
+```bash
+ssh-copy-id -i ~/.ssh/mykey user@host
+# Example for a key called servers_rsa.pub and radagast:
+# The 'comment' in the public key is arbitrary. Feel free to change that with your favorite text editor before copying it to the server:
+ssh-copy-id -i ~/code/ssh/servers_rsa.pub zebra@radagast.zebra-servers
+# Then you have to authenticate yourself in order for the copy operation to succeed.
+```
+
+
+
 ### Multiple Local RSA Keys
 
 From `.ssh/config`:
 
-```
+```bash
 Host myshortname realname.example.com
     HostName realname.example.com
     IdentityFile ~/.ssh/realname_rsa # private key for realname

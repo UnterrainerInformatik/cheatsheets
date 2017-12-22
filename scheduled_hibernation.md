@@ -38,6 +38,7 @@ echo 0 > /sys/class/rtc/rtc0/wakealarm
 echo `date '+%s' -d "+ $hours hours"` > /sys/class/rtc/rtc0/wakealarm
 # Edit the above line to get the exact length of hibernation you want
 ## For example echo `date '+%s' -d "+ $hours minutes"` to get minutes.
+/usr/bin/logger -t HibernateForHours Hibernating for $hours hours now.
 pm-suspend
 # ...needs sudo rights as well as the write-op to wakealarm
 # so start this script with sudo
