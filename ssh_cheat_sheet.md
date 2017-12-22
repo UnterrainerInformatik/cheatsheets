@@ -28,6 +28,22 @@ touch ~/.ssh/authorized_keys
 chmod 0644 ~/.ssh/authorized_keys
 ```
 
+### Multiple Local RSA Keys
+
+From `.ssh/config`:
+
+```
+Host myshortname realname.example.com
+    HostName realname.example.com
+    IdentityFile ~/.ssh/realname_rsa # private key for realname
+    User remoteusername
+
+Host myother realname2.example.org
+    HostName realname2.example.org
+    IdentityFile ~/.ssh/realname2_rsa
+    User remoteusername
+```
+
 ## PUTTYgen
 
 In order to use the public key in PUTTY and to connect to a linux host in that way, you have to convert it from OpenSSH format (.pem) to putty-format (.ppk).
