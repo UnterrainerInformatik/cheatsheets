@@ -1,5 +1,18 @@
 # README
 
+## Misc
+
+```bash
+# Set screen resolution
+xrandr -s 1920x1080
+# See what Windows Manager you are using
+echo $XDG_CURRENT_DESKTOP
+# See what option you selected from the lightdm greeter to login.
+echo $GDMSESSION
+```
+
+
+
 ## PARTITION/FORMAT DRIVE
 
 ```bash
