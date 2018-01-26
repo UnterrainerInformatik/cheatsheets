@@ -1,4 +1,18 @@
-# VNC on Linux
+# VNC/RDP/x2go on Linux
+
+## Get the desktop environment you're currently using
+
+```bash
+echo $XDG_CURRENT_DESKTOP
+# Tells you what Windows Manager you are using
+echo $GDMSESSION
+# Tells you what option you selected from the lightdm greeter to login.
+```
+
+
+
+# x11vnc
+
 ## Server
 
 For a server we use `x11vnc` since it's the only server that is able to share your current desktop in an easy and understandable way.
@@ -67,8 +81,10 @@ sudo systemctl enable x11vnc.service
 sudo systemctl daemon-reload
 
 sleep  5s
-sudo shutdown -r now 
+systemctl try-restart x11vnc.service
 ```
+
+You may have to restart once for the changes to take effect.
 
 Restart the service manually:
 
@@ -76,7 +92,8 @@ Restart the service manually:
 systemctl try-restart x11vnc.service
 ```
 
-
+For Ubuntu you have to switch to XOrg as window manager (the default is Wayland on 17.04 for example).
+For that to happen you have to log-out and then log-in again. On the login-screen, next to the login button, there is a cogwheel. When you select that, you can chose a window manager.
 
 ### Manual
 
@@ -114,3 +131,84 @@ It's best to install RealVNC from their website. It's the most advanced interfac
 # Download it
 # And install it using your favorite package manager
 ```
+
+
+
+# XRDP
+
+```bash
+sudo apt install xrdp
+# Check Installation
+xrdp -v
+# Should print:
+#xrdp: A Remote Desktop Protocol server.
+#Copyright (C) Jay Sorg 2004-2014
+#See http://www.xrdp.org for more information.
+#Version 0.9.1
+sudo nano /etc/xrdp/startwm.sh
+# Comment out the last two lines and add one like here:
+#test -x /etc/X11/Xsession && exec /etc/X11/Xsession
+#exec /bin/sh /etc/X11/Xsession
+budgie-desktop
+# Now save the file and exit nano.
+
+#By default, the xRDP login screen should be using the actual keyboard layout you are using.  However, inside the remote session, the English layout keyboard is still defined as default and not changed automatically. To try to set the proper keyboard layout within your remote session, you can execute the following commands.
+
+# Set keyboard layout in xrdp sessions 
+cd /etc/xrdp 
+test=$(setxkbmap -query | awk -F":" '/layout/ {print $2}') 
+echo "your current keyboard layout is.." $test
+setxkbmap -layout $test 
+sudo cp /etc/xrdp/km-0409.ini /etc/xrdp/km-0409.ini.bak 
+sudo xrdp-genkeymap km-0409.ini
+
+```
+
+
+
+# x2go
+
+This remote desktop protocol is very fast. As far as I can tell it's proprietary and the best thing about is, that it works all over SSH.
+So it's pretty secure and access is granted by simply creating an SSH user.
+Rule of thumb is: If you can SSH to that machine via that user, you can x2go there too.
+
+The connecting user of course has to enter the user-credentials.
+
+## Server
+
+```bash
+# Add the x2go repository
+sudo add-apt-repository ppa:x2go/stable -y
+
+# Update the repositories
+sudo apt-get update
+
+# Add necessary software
+sudo apt-get install -y x2goserver x2goserver-xsession
+
+# Update the system
+sudo apt-get update
+sudo apt-get upgrade -y
+# Optionally remove any unused packages
+sudo apt-get autoremove -y
+sudo apt-get clean
+```
+
+## Client
+
+```bash
+# Install x2go PPA
+sudo add-apt-repository ppa:x2go/stable
+sudo apt-get update
+
+# Install necessary software
+sudo apt-get install x2goclient
+
+# Update the system
+sudo apt-get update
+sudo apt-get upgrade -y
+# Optionally remove any unused packages
+sudo apt-get autoremove -y
+sudo apt-get clean
+```
+
