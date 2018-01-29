@@ -9,6 +9,13 @@ xrandr -s 1920x1080
 echo $XDG_CURRENT_DESKTOP
 # See what option you selected from the lightdm greeter to login.
 echo $GDMSESSION
+
+# Read compressed log-files
+zcat /var/log/syslog.2.gz
+# Grep for pattern and highlight, but don't omit no-match lines
+cat /var/log/syslog | grep -E '^|rsnapshot'
+# Grep for patterns and highlight, but don't omit no-match lines
+cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
 ```
 
 
