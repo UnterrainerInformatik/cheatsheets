@@ -170,6 +170,25 @@ sudo nano /etc/sudoers
 pi ALL=(ALL) NOPASSWD: ALL
 ```
 
+## Filesystem
+
+```bash
+# Get the number of files in each sub-directory in the directory you're currently in.
+find . -xdev -type d -print0 |
+  while IFS= read -d '' dir; do
+    echo "$(find "$dir" -maxdepth 1 -print0 | grep -zc .) $dir"
+  done |
+  sort -rn |
+  head -50
+
+#Get the number of files and directories
+ls -1 | wc -l
+# Get the number of files and directories in a nice tree representation.
+tree .
+```
+
+
+
 
 
 ## Remote Desktop Ubuntu - Windows
