@@ -185,6 +185,8 @@ find . -xdev -type d -print0 |
 ls -1 | wc -l
 # Get the number of files and directories in a nice tree representation.
 tree .
+# Find similar files in different directories (name may vary).
+fdupes --recurse dir1 dir2
 ```
 
 
