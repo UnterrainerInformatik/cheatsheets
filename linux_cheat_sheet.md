@@ -104,8 +104,9 @@ sudo chown nobody:nogroup /mnt/share
 # (important for nfs permission downgrading)
 sudo nano /etc/exports
 # Add a new share. Example:
-  /mnt/share 10.0.0.0/255.0.0.0(rw,sync,no_subtree_check)
+  /mnt/share 10.0.0.0/255.0.0.0(rw,sync,no_subtree_check,no_root_squash)
   # (whereas the ip/mask combination are the allowed clients!)
+  # and no_root_squash enables the target to call chown again.
 sudo exportfs -a
 # (really exports the nfs settings)
 # if your firewall isn't off, you'll have to punch a hole through it for this service :)
