@@ -190,6 +190,13 @@ tree .
 fdupes --recurse dir1 dir2
 ```
 
+## RSNAPSHOT
+
+```bash
+# View schedule of installed srnapshot configs.
+cat /etc/cron.d/rsnapshot
+```
+
 
 
 

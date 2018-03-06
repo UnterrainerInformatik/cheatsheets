@@ -67,7 +67,7 @@ Import that in putty and add it under 'auth' in the connection preferences. When
 ## rsync
 
 ```bash
-rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --progress /mnt/Backup1/* pi@www.unterrainer.info:/mnt/Backup1B1 >> /var/log/rsyncToUnterrainerInformatik.log 2>&1
+sudo rsync -avrPe "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i $HOME/.ssh/epsilon3_rsa -p 65493" --rsync-path="sudo rsync" -avRHP --delete /mnt/Backup1/ pi@www.unterrainer.info:/mnt/Backup1B1 >> /var/log/rsyncToUnterrainerInformatik.log 2>&1
 ```
 
 ### Security Issues
