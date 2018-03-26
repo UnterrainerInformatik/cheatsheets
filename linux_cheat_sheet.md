@@ -197,7 +197,103 @@ fdupes --recurse dir1 dir2
 cat /etc/cron.d/rsnapshot
 ```
 
+## Bash
 
+```bash
+# The shebang.
+#!/bin/bash
+
+# Parameter checking.
+if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters. Use <param1> <param2>"
+fi
+
+# Setting variables for this script.
+server=$1
+db=$2
+user=$3
+pwd=$4
+
+# Run other script.
+. read_config.sh
+
+# Build variables out of variables.
+nbranch="${server}_${db}_this_month"
+obranch="${server}_${db}_last_month"
+
+# This is a function.
+# Functions have to be declared before they can be called.
+function this_is_a_function {
+  echo "first parameter of function: $1"
+  echo "first parameter of function: $2"
+}
+
+# If branch exists (pipe output to dev/null) then delete it and push the deleted branch (to delete it from upstream).
+(git show-branch $1 &>/dev/null) && (git branch -D $1 && git push origin -d $1)
+
+# If a succeeds (exit 0), then b, else c (a exits with >0).
+(a) && (b) || (c)
+
+# Call rotate.sh and pass all parameters passed to this script here.
+/var/lib/mysqlbu/rotate.sh "$@"
+
+# Exit with error.
+exit 1
+# Exit with success.
+exit 0
+```
+
+### Config File Parser
+
+```bash
+# Configuration file parser.
+# Replace <NAME_OF_YOUR_PROGRAM>.
+# Load with . <filename_of_this> <filename_of_your_config> in the script you're gonna use it in.
+
+shopt -s extglob
+configfile="${1}" # set the actual path name of your (DOS or Unix) config file
+
+tr -d '\r' < $configfile > .$configfile.unix
+while IFS='= ' read lhs rhs
+do
+    if [[ ! $lhs =~ ^\ *# && -n $lhs ]]; then
+        rhs="${rhs%%\#*}"    # Del in line right comments
+        rhs="${rhs%%*( )}"   # Del trailing spaces
+        rhs="${rhs%\"*}"     # Del opening string quotes 
+        rhs="${rhs#\"*}"     # Del closing string quotes 
+        if [[ $rhs == \(* && $rhs == *\) ]]; then 	# if opening and closing parenthesis...
+	    declare -a $lhs="${rhs}" 			# Declare as array
+	else
+	    declare $lhs="$rhs" 			# Declare as variable
+	fi
+    fi
+done < .$configfile.unix
+```
+
+### Example Config File
+
+```bash
+# The dir where mysqlbu will be installed
+dir = /data/backup/mysqlbu
+
+# The name of the repository containing the backup-data
+repo = mysql-backup
+# The upstream repository
+upstream =ssh://git@git.zebra-servers:2222/dev-ops/backup/mysql-backup.git
+# The commit message for the dumps
+message="Daily backup."
+# The file name of the dumps
+file="dump.sql"
+# This is an actual array (which is treated as such after parsing)
+arr1=(1 2 3)
+arr2 = ('one' 'two' '3')
+```
+
+
+
+
+
+## 
 
 
 
