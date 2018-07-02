@@ -4,7 +4,7 @@
 #
 # https://github.com/martinburger/bash-common-helpers/blob/master/bash-common-helpers.sh
 
-function bl_cc {
+bl_cc () {
     echo "\033[$1m"
 }
 
@@ -28,14 +28,14 @@ bl_YELLOW=$(bl_cc 33)
 bl_BLUE=$(bl_cc 34)
 bl_MAGENTA=$(bl_cc 35)
 bl_CYAN=$(bl_cc 36)
-bl_LIGHT_GRAY=$(bl_cc 37)
-bl_DARK_GRAY=$(bl_cc 90)
-bl_LIGHT_RED=$(bl_cc 91)
-bl_LIGHT_GREEN=$(bl_cc 92)
-bl_LIGHT_YELLOW=$(bl_cc 93)
-bl_LIGHT_BLUE=$(bl_cc 94)
-bl_LIGHT_MAGENTA=$(bl_cc 95)
-bl_LIGHT_CYAN=$(bl_cc 96)
+bl_LIGHTGRAY=$(bl_cc 37)
+bl_DARKGRAY=$(bl_cc 90)
+bl_LIGHTRED=$(bl_cc 91)
+bl_LIGHTGREEN=$(bl_cc 92)
+bl_LIGHTYELLOW=$(bl_cc 93)
+bl_LIGHTBLUE=$(bl_cc 94)
+bl_LIGHTMAGENTA=$(bl_cc 95)
+bl_LIGHTCYAN=$(bl_cc 96)
 bl_WHITE=$(bl_cc 97)
 
 ###############################################################################
@@ -49,16 +49,61 @@ bl_BG_YELLOW=$(bl_cc 43)
 bl_BG_BLUE=$(bl_cc 44)
 bl_BG_MAGENTA=$(bl_cc 45)
 bl_BG_CYAN=$(bl_cc 46)
-bl_BG_LIGHT_GRAY=$(bl_cc 47)
-bl_BG_DARK_GRAY=$(bl_cc 100)
-bl_BG_LIGHT_RED=$(bl_cc 101)
-bl_BG_LIGHT_GREEN=$(bl_cc 102)
-bl_BG_LIGHT_YELLOW=$(bl_cc 103)
-bl_BG_LIGHT_BLUE=$(bl_cc 104)
-bl_BG_LIGHT_MAGENTA=$(bl_cc 105)
-bl_BG_LIGHT_CYAN=$(bl_cc 106)
+bl_BG_LIGHTGRAY=$(bl_cc 47)
+bl_BG_DARKGRAY=$(bl_cc 100)
+bl_BG_LIGHTRED=$(bl_cc 101)
+bl_BG_LIGHTGREEN=$(bl_cc 102)
+bl_BG_LIGHTYELLOW=$(bl_cc 103)
+bl_BG_LIGHTBLUE=$(bl_cc 104)
+bl_BG_LIGHTMAGENTA=$(bl_cc 105)
+bl_BG_LIGHTCYAN=$(bl_cc 106)
 bl_BG_WHITE=$(bl_cc 107)
 
+
+
+###############################################################################
+# Returns the given character repeated X times.
+#
+# Example:
+# bl_repeat "#" 10
+# returns: "##########"
+###############################################################################
+bl_repeat () {
+  local str=$1
+  local num=$2
+  if [ $num -eq 0 ]; then
+    echo ""
+    exit 0
+  fi
+  v=$(printf "%-${num}s" "${str}")
+  echo "${v// /${str}}"
+}
+
+
+###############################################################################
+# Writes the given messages as a heading to standard output.
+#
+# Example:
+# bl_echo_h "name_of_script.sh"
+#
+# will output a color formatted version of:
+# bl_echo_h "#######################"
+# bl_echo_h "## name_of_script.sh ##"
+# bl_echo_h "#######################"
+###############################################################################
+bl_echo_h () {  
+  function ech {
+    echo -e "${bl_B}${bl_BG_DARKGRAY}${bl_BLUE}$@${bl_DEFAULT}${bl_BG_DEFAULT}${bl_B_END}"
+  }
+
+  local str=$1
+  local len=${#str}
+  local l=$((len+6))
+  r=$(bl_repeat "#" $l)
+  ech $r
+  ech "## $1 ##"
+  ech $r
+}
 
 
 ###############################################################################
@@ -67,8 +112,8 @@ bl_BG_WHITE=$(bl_cc 107)
 # Example:
 # bl_echo_i "Something important occured."
 ###############################################################################
-function bl_echo_i {  
-    echo -e "${bl_I}$1${bl_I_END}"
+bl_echo_i () {  
+  echo -e "${bl_I}$@${bl_I_END}"
 }
 
 
@@ -78,8 +123,29 @@ function bl_echo_i {
 # Example:
 # bl_echo_b "Disk is full!"
 ###############################################################################
-function bl_echo_b {  
-    echo -e "${bl_B}$1${bl_B_END}"
+bl_echo_b () {  
+  echo -e "${bl_B}$@${bl_B_END}"
+}
+
+
+###############################################################################
+# Writes the given messages in blue letters for a certain level to standard 
+# output.
+#
+# Example:
+# bl_echo_n 0 "root level"
+# bl_echo_n 1 "first level"
+# bl_echo_n 2 "second level" "some more"
+###############################################################################
+bl_echo_n () {
+  local l=$1
+  shift
+  local r=$(bl_repeat " " $(($l*2)))
+  if [ $l -eq 0 ]; then
+    echo -e "${bl_LIGHTBLUE}${bl_B}$r$@${bl_B_END}${bl_DEFAULT}"
+  else
+    echo -e "${bl_LIGHTBLUE}$r$@${bl_DEFAULT}"
+  fi
 }
 
 
@@ -89,10 +155,8 @@ function bl_echo_b {
 # Example:
 # bl_echo_info "Task completed."
 ###############################################################################
-function bl_echo_info {
-  local green=$(tput setaf 2)
-  local reset=$(tput sgr0)
-  echo -e "${green}$@${reset}"
+bl_echo_info () {
+  echo -e "${bl_GREEN}$@${bl_DEFAULT}"
 }
 
 
@@ -102,10 +166,8 @@ function bl_echo_info {
 # Example:
 # bl_echo_warn "Please complete the following task manually."
 ###############################################################################
-function bl_echo_warn {
-  local yellow=$(tput setaf 3)
-  local reset=$(tput sgr0)
-  echo -e "${yellow}$@${reset}"
+bl_echo_warn () {
+  echo -e "${bl_YELLOW}$@${bl_DEFAULT}"
 }
 
 
@@ -115,10 +177,8 @@ function bl_echo_warn {
 # Example:
 # bl_echo_err "There was a failure."
 ###############################################################################
-function bl_echo_err {
-  local red=$(tput setaf 1)
-  local reset=$(tput sgr0)
-  echo -e "${red}$@${reset}"
+bl_echo_err () {
+  echo -e "${bl_RED}$@${bl_DEFAULT}"
 }
 
 
@@ -132,7 +192,7 @@ function bl_echo_err {
 # Example:
 # bl_init
 ###############################################################################
-function bl_init {
+bl_init () {
   # Will exit script if we would use an uninitialised variable:
   set -o nounset
   # Will exit script when a simple command (not a control structure) fails:
@@ -152,7 +212,7 @@ function bl_init {
 # ID number; the EUID will be 0 even though the current user has gained root
 # priviliges by means of su or sudo.
 ###############################################################################
-function bl_assert_running_as_root {
+bl_assert_running_as_root () {
   if [[ ${EUID} -ne 0 ]]; then
     bl_die "This script must be run as root!"
   fi
@@ -166,11 +226,48 @@ function bl_assert_running_as_root {
 # Example:
 # bl_die "An error occurred."
 ###############################################################################
-function bl_die {
-  local red=$(tput setaf 1)
-  local reset=$(tput sgr0)
-  echo >&2 -e "${red}$@${reset}"
+bl_die () {
+  echo >&2 -e "${bl_BG_RED}${bl_WHITE}${bl_B}$@${bl_B_END}${bl_DEFAULT}${bl_BG_DEFAULT}"
   exit 1
+}
+
+
+###############################################################################
+# Makes sure that the given variables exist. The variables are specified by
+# name.
+#
+# Example:
+# bl_variables_exist "TESTING__somevars__var1" "TESTING__somevars__var2"
+#
+# This function uses indirect expansion: Bash uses the value of the variable
+# formed from the rest of parameter as the name of the variable. This way,
+# we can check if a variable with the given name is set.
+###############################################################################
+bl_variables_exist () {
+  for variable in ${@}; do
+    if [[ -z "${!variable-}" ]]; then
+      return 1
+    fi
+  done
+  return 0
+}
+
+
+###############################################################################
+# Checks if the term you're working on is dumb or a real term.
+# 
+# Example:
+# if bl_isterm; then echo "Yay!"; else echo "Oooh!"; fi
+###############################################################################
+bl_isterm () {
+  if test -t 1; then
+    # see if it supports colors...
+    ncolors=$(tput colors)
+    if test -n "$ncolors" && test $ncolors -ge 8; then
+      return 0
+    fi
+  fi
+  return 1
 }
 
 
@@ -178,9 +275,9 @@ function bl_die {
 # Makes sure that the given command is available.
 #
 # Example:
-# bl_assert_command_is_available "ping"
+# bl_assert_command_available "ping"
 ###############################################################################
-function bl_assert_command_is_available {
+bl_assert_command_available () {
   local cmd=${1}
   type ${cmd} >/dev/null 2>&1 || bl_die "Cancelling because required command '${cmd}' is not available."
 }
@@ -193,7 +290,7 @@ function bl_assert_command_is_available {
 # Example:
 # bl_assert_file_exists "myfile.txt"
 ###############################################################################
-function bl_assert_file_exists {
+bl_assert_file_exists () {
   local file=${1}
   if [[ ! -f "${file}" ]]; then
     bl_die "Cancelling because required file '${file}' does not exist."
@@ -207,7 +304,7 @@ function bl_assert_file_exists {
 # Example:
 # bl_assert_file_does_not_exist "file-to-be-written-in-a-moment"
 ###############################################################################
-function bl_assert_file_does_not_exist {
+bl_assert_file_does_not_exist () {
   local file=${1}
   if [[ -e "${file}" ]]; then
     bl_die "Cancelling because file '${file}' exists."
@@ -225,7 +322,7 @@ function bl_assert_file_does_not_exist {
 # On yes (y/Y), the function just returns; on no (n/N), it prints a confirmative
 # message to the screen and exits with return code 1 by calling `bl_die`.
 ###############################################################################
-function bl_ask_to_continue {
+bl_ask_to_continue () {
   local msg=${1}
   local waitingforanswer=true
   while ${waitingforanswer}; do
@@ -255,7 +352,7 @@ function bl_ask_to_continue {
 # Example:
 # bl_ask_for_password "THEVARNAME" "Please enter your password"
 ###############################################################################
-function bl_ask_for_password {
+bl_ask_for_password () {
   local VARIABLE_NAME=${1}
   local MESSAGE=${2}
 
@@ -309,7 +406,7 @@ function bl_ask_for_password {
 # Example:
 # bl_ask_for_password_twice "THEVARNAME" "Please enter your password"
 ###############################################################################
-function bl_ask_for_password_twice {
+bl_ask_for_password_twice () {
   local VARIABLE_NAME=${1}
   local MESSAGE=${2}
   local VARIABLE_NAME_1="${VARIABLE_NAME}_1"
@@ -349,7 +446,7 @@ function bl_ask_for_password_twice {
 # Example:
 # bl_replace_in_files placeholder replacement file1.txt file2.txt
 ###############################################################################
-function bl_replace_in_files {
+bl_replace_in_files () {
 
   local search=${1}
   local replace=${2}
@@ -403,7 +500,7 @@ function bl_replace_in_files {
 # not need to install that parser.
 # See: https://github.com/rudimeier/bash_ini_parser
 ###############################################################################
-function bl_parse_ini_file {
+bl_parse_ini_file () {
 
   set +o nounset
   set +o errexit
@@ -416,6 +513,7 @@ function bl_parse_ini_file {
   fi
 
 }
+
 
 ###############################################################################
 # Makes sure that the given INI variables exist. The variables are specified by
@@ -431,7 +529,7 @@ function bl_parse_ini_file {
 # formed from the rest of parameter as the name of the variable. This way,
 # we can check if a variable with the given name is set.
 ###############################################################################
-function bl_assert_ini_variables_exist {
+bl_assert_ini_variables_exist () {
   for variable in ${@}; do
     if [[ -z "${!variable-}" ]]; then
       bl_die "Missing variable in INI file: ${variable}"

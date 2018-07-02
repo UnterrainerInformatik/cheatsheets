@@ -1,15 +1,12 @@
 #!/bin/bash
-echo "##########################"
-echo "#### bashlib_test.sh: ####"
-echo "##########################"
-
+bl_echo_h "bashlib_test.sh"
 . bashlib.sh
 bl_init
 
 echo This is a normal test
 bl_echo_i This is an inverted test
 bl_echo_b This is a bold test
-echo -e This${bl_RED}is red${bl_CLEAR} and ${bl_BG_LIGHT_BLUE}this is${bl_BG_GREEN} green${bl_CLEAR}
+echo -e This${bl_RED}is red${bl_CLEAR} and ${bl_BG_LIGHTBLUE}this is${bl_BG_GREEN} green${bl_CLEAR}
 echo
 
 bl_echo_info This is an info
@@ -40,3 +37,18 @@ do
     echo $i
 done
 
+echo
+v=$(bl_repeat "+" 5)
+echo ${v}
+v=$(bl_repeat "+" 1)
+echo ${v}
+v=$(bl_repeat "+" 0)
+echo ${v}
+
+echo
+bl_echo_n 0 "root level"
+bl_echo_n 1 "first level"
+bl_echo_n 2 "second level"
+bl_echo_n 3 "third level"
+
+bl_die Stirb

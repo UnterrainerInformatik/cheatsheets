@@ -243,6 +243,15 @@ exit 1
 exit 0
 ```
 
+```bash
+# Lock via file (handle 200, can be any number) and exit if already locked.
+exec 200>/tmp/rsync-to-unterrainer.lockfile
+flock -n 200 || exit 1
+~/rsyncToUnterrainerInformatik.sh
+```
+
+
+
 ### Config File Parser
 
 ```bash
