@@ -159,8 +159,13 @@ sudo ps aux
 # (list of processes)
 sudo ps aux | grep rsync
 # (list of all processes containing 'rsync')
-ctop
+htop
 # (graphical representation of all running tasks with CPU and MEM bars)
+ctop
+# (graphical representation of all running docker containers)
+
+# To fully disconnect a program from the terminal where you launched it, use
+nohup myprogram </dev/null >myprogram.log 2>&1 &
 ```
 
 ## PRIVILEGES
