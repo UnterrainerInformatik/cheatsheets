@@ -262,7 +262,7 @@ while [[ $RC -ne 0 ]]
 do
   /home/zebra/rsyncBackup1ToBackup1Weekly.sh 
   RC=$?
-  if [[ $RC -ne 0 ]]
+  if [[ $RC -ne 0 ]]; then
     _echo_i "Transfer disrupted (return code ${RC}), retrying in 10 seconds..."
     sleep 10
   fi
