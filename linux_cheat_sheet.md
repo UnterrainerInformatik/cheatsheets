@@ -255,6 +255,29 @@ flock -n 200 || exit 1
 ~/rsyncToUnterrainerInformatik.sh
 ```
 
+```bash
+# Retry rsync until there is no error any longer.
+RC=1 
+while [[ $RC -ne 0 ]]
+do
+  /home/zebra/rsyncBackup1ToBackup1Weekly.sh 
+  RC=$?
+  if [[ $RC -ne 0 ]]
+    _echo_i "Transfer disrupted (return code ${RC}), retrying in 10 seconds..."
+    sleep 10
+  fi
+done
+```
+
+```bash
+# Embed lodash (own library) from GitLab static link and open new script.
+#!/bin/bash
+source <(curl -s http://git.zebra-servers/dev-ops/scripts/raw/master/lobash.sh?private_token=Ki4mWMtvyaKJgNcnun4U)
+_init
+
+_echo_h "rsyncBackupToBackup1WeeklyLocked.sh"
+```
+
 
 
 ### Config File Parser
