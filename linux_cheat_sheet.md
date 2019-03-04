@@ -70,7 +70,7 @@ sudo blkid /dev/sda
 sudo nano -Bw /etc/fstab
 
 # Change permissions:
-sudo chmod 777 /mnt/usbdrive
+sudo chmod 775 /mnt/usbdrive
 # Change ownership:
 sudo chown root:root /mnt/usbdrive
 ```
