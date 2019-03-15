@@ -64,6 +64,13 @@ sudo blkid
 # get info about device-events like connecting one:
 dmesg
 
+# get a list of connected usb devices:
+lsusb
+# get a verbose list:
+lsusb -v
+# display the list as tree (overrides v):
+lsusb -t
+
 # get drive info sorted by UUID like so:
 ls -l /dev/disk/by-uuid
 total 0
