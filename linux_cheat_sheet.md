@@ -166,6 +166,13 @@ ctop
 
 # To fully disconnect a program from the terminal where you launched it, use
 nohup myprogram </dev/null >myprogram.log 2>&1 &
+
+# also disconnect but close if parent (this terminal) closes:
+myprogram &
+# disconnect and also disconnect from parent process (front):
+setsid myprogram
+# same but back:
+myprogram & disown
 ```
 
 ## PRIVILEGES
