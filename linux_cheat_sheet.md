@@ -52,6 +52,30 @@ parted -s /dev/sda print
 sudo tune2fs /dev/sde5 -U <uuid>
 ```
 
+## FIND DRIVE - DRIVE INFO
+
+```bash
+# get a list of attached drives
+df -h
+
+# get info about attached drives with moundpoints, UUIDs and dev-name:
+sudo blkid
+
+# get info about device-events like connecting one:
+dmesg
+
+# get drive info sorted by UUID like so:
+ls -l /dev/disk/by-uuid
+total 0
+lrwxrwxrwx 1 root root 10 Jan  7 14:25 00dd0a12-a0a6-4322-aff4-f0365294138d -> ../../dm-1
+lrwxrwxrwx 1 root root 10 Jan  7 14:25 38c7f7c5-2e2b-4983-bead-6a4062a3146f -> ../../sdc1
+lrwxrwxrwx 1 root root 10 Jan  7 14:25 5F52-8B64 -> ../../sda1
+lrwxrwxrwx 1 root root 10 Jan  7 14:25 92b6a434-8ccd-4eef-888f-0e5b85df199c -> ../../dm-0
+lrwxrwxrwx 1 root root 10 Jan  7 14:25 b22cc427-1747-4a43-a13c-9a63e74cfc51 -> ../../sda2
+lrwxrwxrwx 1 root root  9 Jan  7 14:25 c2023b82-aa2e-4e88-855a-f976966efa92 -> ../../sdb
+
+```
+
 ## MOUNT DRIVE
 
 ```bash
