@@ -20,7 +20,7 @@ cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
 
 
 
-## PARTITION/FORMAT DRIVE
+## Partition/Format Drive
 
 ```bash
 sudo -s
@@ -52,7 +52,7 @@ parted -s /dev/sda print
 sudo tune2fs /dev/sde5 -U <uuid>
 ```
 
-## FIND DRIVE - DRIVE INFO
+## Find Drive - Drive Info
 
 ```bash
 # get a list of attached drives
@@ -83,7 +83,7 @@ lrwxrwxrwx 1 root root  9 Jan  7 14:25 c2023b82-aa2e-4e88-855a-f976966efa92 -> .
 
 ```
 
-## MOUNT DRIVE
+## Mount Drive
 
 ```bash
 sudo mount -a
@@ -106,7 +106,7 @@ sudo chmod 775 /mnt/usbdrive
 sudo chown root:root /mnt/usbdrive
 ```
 
-## MOUNT WITH FSTAB
+## Mont With Fstab
 
 ```bash
 sudo blkid 
@@ -158,30 +158,33 @@ sudo mount <ip_or_name>:/mnt/share /mnt/localshare
 radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    0       0
 ```
 
-## SAMBA
+## Samba
 
 ```bash
 sudo nano /etc/samba/smb.conf
 sudo /etc/init.d/samba restart
 ```
 
-## CHECK DRIVE
+## Check Drive
 
 ```bash
 e2fsck -p -C 0 /dev/<device>
 ```
-## GET FREE SPACE
+## Get Free Space On HDDs
 
 ```bash
 df -h
+
+# for directories
+du -h -d 1 *
 ```
-## UPDATE RASPBIAN (DRIVERS, ...)
+## Update Raspbian (drivers, ...)
 
 ```bash
 sudo rpi-update
 ```
 
-## PROCESSES
+## Processes
 
 ```bash
 sudo ps fuxwa
@@ -206,7 +209,7 @@ setsid myprogram
 myprogram & disown
 ```
 
-## PRIVILEGES
+## Privileges
 
 ```bash
 sudo nano /etc/sudoers
@@ -233,7 +236,7 @@ tree .
 fdupes --recurse dir1 dir2
 ```
 
-## RSNAPSHOT
+## Rsnapshot
 
 ```bash
 # View schedule of installed srnapshot configs.
@@ -364,11 +367,6 @@ arr1=(1 2 3)
 arr2 = ('one' 'two' '3')
 ```
 
-
-
-
-
-## 
 
 
 
