@@ -106,7 +106,7 @@ sudo chmod 775 /mnt/usbdrive
 sudo chown root:root /mnt/usbdrive
 ```
 
-## Mont With Fstab
+## Mount With Fstab
 
 ```bash
 sudo blkid 
