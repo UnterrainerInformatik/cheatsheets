@@ -6,6 +6,9 @@ On our origin server, we will generate public SSH keys with no password:
 
 ```bash
 ssh-keygen -f ~/.ssh/id_rsa -q -P ""
+# or if you'd like a windows (putty) compatible one:
+ssh-keygen -m PEM -t rsa -b 4096 -P ""
+# to generate a pem (private file), import it into puttygen saving it as pem afterwards.
 cat ~/.ssh/id_rsa.pub
 ```
 
