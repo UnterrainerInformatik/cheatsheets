@@ -20,6 +20,15 @@ cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
 
 
 
+## Docker
+```bash
+# post-install to run prune periodically
+0 2 * * * /usr/bin/docker system prune -f 2>&1
+```
+
+
+
+
 ## Partition/Format Drive
 
 ```bash
