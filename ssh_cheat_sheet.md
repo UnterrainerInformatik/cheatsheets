@@ -29,6 +29,11 @@ mkdir ~/.ssh
 chmod 0700 ~/.ssh
 touch ~/.ssh/authorized_keys
 chmod 0644 ~/.ssh/authorized_keys
+
+# a id_rsa file should have the following permissions:
+chmod 0600 ~/.ssh/id_rsa
+# and the public key:
+chmod 0644 ~/.ssh/id_rsa.pub
 ```
 
 Alternatively you can use this command to copy the local key to the remote server:
