@@ -22,6 +22,14 @@ cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
 
 ## Docker
 ```bash
+# post install general
+sudo groupadd docker
+sudo usermod -aG docker $USER
+# next one is to avoid a re-login
+newgrp docker
+docker run hello-world
+sudo systemctl enable docker
+
 # post-install to run prune periodically
 0 2 * * * /usr/bin/docker system prune -f 2>&1
 ```
