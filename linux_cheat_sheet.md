@@ -57,9 +57,13 @@ mkfs.ext4 /dev/sda
 sync
 
 # Change drive label:
+# ext2,3,4
 tune2fs -L label /dev/sdb2
+# btrfs
+sudo btrfs filesystem label <device or mountpoint> <newlabel>
 
 # Change the drives reserved space to zero:
+# ext2,3,4
 sudo tune2fs -m 0 /dev/sda
 
 # And you're done. If you unplug and replug, XBMC will auto mount it, with a full 3TB available. This is verifiable with:
