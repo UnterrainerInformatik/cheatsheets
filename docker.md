@@ -32,6 +32,9 @@ sudo nano /etc/docker/daemon.json
     "data-root": "/tmp/var-docker"
 }
 
+# reload config (.json config files)
+sudo systemctl daemon-reload
+
 # Start docker again
 sudo systemctl start docker
 ```
