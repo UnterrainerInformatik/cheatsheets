@@ -165,6 +165,23 @@ radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    
 ```bash
 sudo nano /etc/samba/smb.conf
 sudo /etc/init.d/samba restart
+# or
+sudo service smb restart
+
+# add new samba user...
+# first add it to the system with strong passwd
+useradd <username>
+# this is better since adduser will add a home-directory and useradd will not
+# now add the user to the samba-list
+# here you can add the samba-passwd
+smbpasswd -a <username>
+
+# SMB 4 and up...
+# no need to create a local user any longer...
+# just do
+sudo samba-tool user add USERNAME-HERE
+# restart
+sudo service smbd restart
 ```
 
 ## Check Drive
