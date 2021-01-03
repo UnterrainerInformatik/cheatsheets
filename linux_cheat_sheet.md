@@ -178,8 +178,9 @@ smbpasswd -a <username>
 
 # SMB 4 and up...
 # no need to create a local user any longer...
+# but only if you use AD services and not standalone-samba-server.
 # just do
-sudo samba-tool user add USERNAME-HERE
+sudo samba-tool user create USERNAME-HERE
 # restart
 sudo service smbd restart
 ```
