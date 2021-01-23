@@ -400,10 +400,26 @@ arr1=(1 2 3)
 arr2 = ('one' 'two' '3')
 ```
 
+## Chrome Remote Desktop and Ubuntu Desktop
+```bash
+# first install Ubuntu Desktop on the server without recommendations
+sudo apt install --no-install-recommends ubuntu-desktop
+# download the latest version of chrome-remote-desktop on the server
+wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+# install it
+sudo dpkg -i chrome-remote-desktop_current_amd64.deb
+sudo apt -f install
+# now we have to authorize the new installation...
+# follow the steps being displayed if you follow the next link on a computer
+# running a viable installation of crome-remote-desktop with authentication...
+https://remotedesktop.google.com/headless/
+```
 
+### References
+- https://remotedesktop.google.com/headless/
+- http://scode.github.io/docs/software/chrome_remote_desktop_ubuntu.html
 
 
 ## Remote Desktop Ubuntu - Windows
 
 https://askubuntu.com/a/592544
-
