@@ -18,6 +18,16 @@ sudo systemctl enable docker
 
 # post-install to run prune periodically
 0 2 * * * /usr/bin/docker system prune -f 2>&1
+
+# if you'd like to use special DNS servers from within
+# your containers, then do the following:
+sudo nano /etc/docker/daemon.json
+# and add the following:
+{
+  "dns": ["192.168.16.5" , "192.168.16.6"]
+}
+# where the IPs are from your DNS servers.
+# They will be used from within containers started on your host.
 ```
 
 
