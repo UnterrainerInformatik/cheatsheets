@@ -16,6 +16,9 @@ zcat /var/log/syslog.2.gz
 cat /var/log/syslog | grep -E '^|rsnapshot'
 # Grep for patterns and highlight, but don't omit no-match lines
 cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
+
+# Set timezone
+sudo timedatectl set-timezone Europe/Vienna
 ```
 
 ## Partition/Format Drive
