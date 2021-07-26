@@ -19,6 +19,10 @@ cat /var/log/syslog | grep -E '^|rsnapshot|rsync'
 
 # Set timezone
 sudo timedatectl set-timezone Europe/Vienna
+
+# Disable automatic updates
+sudo nano /etc/apt/apt.conf.d/20auto-upgrades
+# set values to zero and save
 ```
 
 ## Partition/Format Drive
