@@ -67,3 +67,26 @@ sudo systemctl daemon-reload
 # Start docker again
 sudo systemctl start docker
 ```
+
+## Server Installation Script
+
+```bash
+# docker...
+sudo apt update -y
+sudo apt install -y docker.io
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+sudo systemctl enable docker
+# ctop...
+sudo curl -Lo /usr/local/bin/ctop https://github.com/bcicen/ctop/releases/download/0.7.6/ctop-0.7.6-darwin-amd64
+sudo chmod +x /usr/local/bin/ctop
+# useful programs...
+sudo apt install -y net-tools pv bc ack mtr tree mc ncdu
+sudo apt upgrade -y
+
+# AFTER THAT...
+# post-install to run prune periodically
+0 2 * * * /usr/bin/docker system prune -f 2>&1
+```
