@@ -79,6 +79,8 @@ sudo usermod -aG docker $USER
 newgrp docker
 docker run hello-world
 sudo systemctl enable docker
+# docker-compose...
+sudo apt install -y docker-compose
 # ctop...
 sudo curl -Lo /usr/local/bin/ctop https://github.com/bcicen/ctop/releases/download/0.7.6/ctop-0.7.6-darwin-amd64
 sudo chmod +x /usr/local/bin/ctop
