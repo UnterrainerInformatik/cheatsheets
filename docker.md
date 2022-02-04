@@ -17,6 +17,7 @@ docker run hello-world
 sudo systemctl enable docker
 
 # post-install to run prune periodically
+sudo crontab -e
 0 2 * * * /usr/bin/docker system prune -f 2>&1
 
 # if you'd like to use special DNS servers from within
@@ -90,5 +91,6 @@ sudo apt upgrade -y
 
 # AFTER THAT...
 # post-install to run prune periodically
+sudo crontab -e
 0 2 * * * /usr/bin/docker system prune -f 2>&1
 ```
