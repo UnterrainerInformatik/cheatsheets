@@ -487,6 +487,11 @@ sudo crontab -e
 dd if=/mnt/test/mycorruptedfile.txt of=/mnt/someotherdisk/newfilename.txt conv=noerror,sync
 ```
 
+### Batch Rename Script
+```bash
+find . -depth -type f -name "*${1}*" -exec rename -v "s/${1}/${2}/" {} +
+```
+
 ### References
 - https://remotedesktop.google.com/headless/
 - http://scode.github.io/docs/software/chrome_remote_desktop_ubuntu.html
