@@ -407,7 +407,41 @@ arr1=(1 2 3)
 arr2 = ('one' 'two' '3')
 ```
 
-## Chrome Remote Desktop and Ubuntu Desktop
+## Users, UIDs and GIDs
+### Change UID and GID of a user
+```bash
+usermod -u <NEWUID> <LOGIN>
+groupmod -g <NEWGID> <GROUP>
+find / -user <OLDUID> -exec chown -h <NEWUID> {} \;
+find / -group <OLDGID> -exec chgrp -h <NEWGID> {} \;
+usermod -g <NEWGID> <LOGIN>
+```
+
+### Get a list of all users with UIDs on a system
+```bash
+cat /etc/passwd
+```
+
+### Find a user's UID or GID
+...use the id command. To find a specific user's UID, at the Unix prompt, enter:
+```bash
+id -u username
+```
+Replace username with the appropriate user's username. To find a user's GID, at the Unix prompt, enter:
+```bash
+id -g username
+```
+If you wish to find out all the groups a user belongs to, instead enter:
+```bash
+id -G username
+```
+If you wish to see the UID and all groups associated with a user, enter id without any options, as follows:
+```bash
+id username
+```
+
+## Server Installation
+### Chrome Remote Desktop and Ubuntu Desktop
 ```bash
 # first install Ubuntu Desktop on the server without recommendations
 sudo apt install --no-install-recommends ubuntu-desktop
@@ -420,6 +454,37 @@ sudo apt -f install
 # follow the steps being displayed if you follow the next link on a computer
 # running a viable installation of crome-remote-desktop with authentication...
 https://remotedesktop.google.com/headless/
+```
+
+### Server Installation Script
+```bash
+# docker...
+sudo apt update -y
+sudo apt install -y docker.io
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker run hello-world
+sudo systemctl enable docker
+# docker-compose...
+sudo apt install -y docker-compose
+# ctop...
+sudo curl -Lo /usr/local/bin/ctop https://github.com/bcicen/ctop/releases/download/0.7.6/ctop-0.7.6-linux-amd64
+sudo chmod +x /usr/local/bin/ctop
+# useful programs...
+sudo apt install -y net-tools pv bc ack mtr tree mc ncdu
+sudo apt upgrade -y
+
+# AFTER THAT...
+# post-install to run prune periodically
+sudo crontab -e
+0 2 * * * /usr/bin/docker system prune -f 2>&1
+```
+
+## Files
+### Copy file including IO Errors
+```bash
+dd if=/mnt/test/mycorruptedfile.txt of=/mnt/someotherdisk/newfilename.txt conv=noerror,sync
 ```
 
 ### References
