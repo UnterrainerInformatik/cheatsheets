@@ -167,7 +167,7 @@ sudo mount <ip_or_name>:/mnt/share /mnt/localshare
 radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    0       0
 ```
 
-## Samba
+## Samba - Server
 
 ```bash
 sudo nano /etc/samba/smb.conf
@@ -190,6 +190,11 @@ smbpasswd -a <username>
 sudo samba-tool user create USERNAME-HERE
 # restart
 sudo service smbd restart
+```
+
+## Samba - Client
+```bash
+sudo apt install -y smbclient
 ```
 
 ## Check Drive
