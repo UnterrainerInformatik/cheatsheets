@@ -170,6 +170,7 @@ radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    
 ## Samba - Server
 
 ```bash
+sudo apt install samba -y
 sudo nano /etc/samba/smb.conf
 sudo /etc/init.d/samba restart
 # or
