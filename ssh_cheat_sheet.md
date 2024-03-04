@@ -52,6 +52,19 @@ ssh-copy-id -i ~/code/ssh/servers_rsa.pub zebra@radagast.zebra-servers
 
 ### Config File
 
+You can have a config file in your `.ssh/` directory to ease some burdens of typing.
+It contains your host-names and the connection credentials (paths to the key-files).
+The benefit is that you'll have host-name completion by pressing `TAB` when using the ssh-command and you'll never have to enter credentials manually (not that I insinuate that you've done that up till now).
+You find the complete documentation of that file [here](https://man.openbsd.org/ssh_config).
+
+Here's how to create it:
+```bash
+sudo nano ~/.ssh/config
+sudo chmod 0600 ~/.ssh/config
+
+# now you may fill that file with your configuration.
+```
+
 Example:
 ```bash
 Host logger-proto3
