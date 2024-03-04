@@ -50,6 +50,36 @@ ssh-copy-id -i ~/code/ssh/servers_rsa.pub zebra@radagast.zebra-servers
 # Then you have to authenticate yourself in order for the copy operation to succeed.
 ```
 
+### Config File
+
+Example:
+```bash
+Host logger-proto3
+  User cms
+  HostName 192.166.15.121
+  IdentityFile ~/.ssh/logger_proto1_ecdsa
+
+Host hetzner-*
+  User root
+  IdentityFile ~/.ssh/hetzner_rsa
+
+Host hetzner-main
+  HostName 91.117.166.175
+
+Host hetzner-proxy
+  HostName 86.9.1.15
+
+Host vela
+  HostName 120.81.13.14
+  User psilo
+  IdentityFile ~/.ssh/kube_ecdsa
+
+Host saturn
+  HostName 10.11.12.13
+  User psilo
+  ProxyJump vela
+  IdentityFile ~/.ssh/kube_ecdsa
+```
 
 
 ### Multiple Local RSA Keys
