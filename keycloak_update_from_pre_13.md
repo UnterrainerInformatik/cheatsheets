@@ -5,18 +5,21 @@ Be sure to save your database, after shutting it down properly, between every st
 A local backup should suffice.
 
 Personally I did this using dockerized MariaDB and dockerized Keycloak, which made things much faster, which was a very welcome circumstance, since getting a nice path through this mess was mainly a trial-and-error process.
+
 ## Upgrade to 13.0.1
 Shut down you database.
 Backup your database.
 First upgrade to image: quay.io/keycloak/keycloak:13.0.1 without changing the config at all.
 Start it and see if the frontend starts correctly.
 Save the database.
+
 ## Upgrade to 16.1.1
 Shut down you database.
 Backup your database.
 Then upgrade to image: quay.io/keycloak/keycloak:16.1.1 without changing the config.
 Start it and see if the frontend starts correctly.
 Save the database.
+
 ## Upgrade to 18.0.2
 Shut down you database.
 Backup your database.
@@ -62,6 +65,7 @@ And it fixes the db-driver which is now pre-compiled by Quarkus, as well as the 
 Start it and see if the frontend starts correctly.
 Save the database.
 This version is a mess as far as configuration is concerned... But don't worry, it's getting better.
+
 ## Upgrade to latest
 Shut down you database.
 Backup your database.
@@ -118,8 +122,10 @@ The new version picks up the `KC_DB` flag again, which is why you don't need the
 
 Of course this means, that you have to adapt all your clients now that you don't have the `http-relative-path` any more. But that should be expected, since this is a change to stay. It won't go away and your clients are better off if you fix this issue ASAP.
 Alternatively you could still append the flag, which would fix the URI, but your clients will still be broken, since so much has changed since the version you've upgraded from and now you have to update your clients anyway.
+
 ## Tidy up
 You now may get rid of all the commented-out lines in your `docker-compose.yml` and set the log-level to `info` again by specifying `- KC_LOG_LEVEL=debug`.
+
 ## Debugging Hostname Issues & Admin Console Name
 Add the following Quarkus-compiler-flag to your start-command in the `docker-compose.yml` file:
 ```bash
@@ -131,9 +137,15 @@ Then restart Keycloak. After startup go to the following URL and see the debug-o
 KEYCLOAK_BASE_URL/realms/master/hostname-debug
 ```
 [Documentation](https://www.keycloak.org/server/hostname#_troubleshooting)
+
 ## Useful Commands
 Save/Reload Database:
 ```bash
 # cd to the volume mapping, then
 sudo cp -pr mysql-data/ mysql-data-save-16.1.1/
 ```
+
+## Post-Upgrade Issues
+## Migrate your login-themes
+The directory your themes should be located in has changed from `/opt/jboss/keycloak/themes` to `/opt/keycloak/themes`, so change your volume mapping accordingly.
+As far as I know nothing substantial has changed otherwise regarding themes, but I only used a login-theme. So I know nothing about the other ones. The templating engine hasn't changed for sure.
