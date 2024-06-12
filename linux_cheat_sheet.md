@@ -1,7 +1,5 @@
 # README
-
 ## Misc
-
 ```bash
 # Set screen resolution
 xrandr -s 1920x1080
@@ -26,7 +24,6 @@ sudo nano /etc/apt/apt.conf.d/20auto-upgrades
 ```
 
 ## Partition/Format Drive
-
 ```bash
 sudo -s
 ```
@@ -62,7 +59,6 @@ sudo tune2fs /dev/sde5 -U <uuid>
 ```
 
 ## Find Drive - Drive Info
-
 ```bash
 # get a list of attached drives
 df -h
@@ -93,7 +89,6 @@ lrwxrwxrwx 1 root root  9 Jan  7 14:25 c2023b82-aa2e-4e88-855a-f976966efa92 -> .
 ```
 
 ## Mount Drive
-
 ```bash
 sudo mount -a
 # (mounts everything in fstab)
@@ -116,7 +111,6 @@ sudo chown root:root /mnt/usbdrive
 ```
 
 ## Mount With Fstab
-
 ```bash
 sudo blkid 
 
@@ -134,7 +128,6 @@ UUID=38c7f7c5-2e2b-4983-bead-6a4062a3146f     /media/Backup1      ext4    defaul
 ```
 
 ## NFS - Server
-
 ```bash
 sudo apt install nfs-kernel-server
 # ...then make local dir you want to share...
@@ -154,7 +147,6 @@ sudo ufw status
 ```
 
 ## NFS - Client
-
 ```bash
 sudo apt install nfs-common
 # ...then make a local dir as mountpoint...
@@ -168,7 +160,6 @@ radagast.zebra-servers:/mnt/Backup1             /mnt/backup     nfs     auto    
 ```
 
 ## Samba - Server
-
 ```bash
 sudo apt install samba -y
 sudo nano /etc/samba/smb.conf
@@ -199,12 +190,10 @@ sudo apt install -y smbclient
 ```
 
 ## Check Drive
-
 ```bash
 e2fsck -p -C 0 /dev/<device>
 ```
 ## Get Free Space On HDDs
-
 ```bash
 df -h
 
@@ -212,13 +201,11 @@ df -h
 du -h -d 1 *
 ```
 ## Update Raspbian (drivers, ...)
-
 ```bash
 sudo rpi-update
 ```
 
 ## Processes
-
 ```bash
 sudo ps fuxwa
 # (process representation with parent-indicator)
@@ -243,7 +230,6 @@ myprogram & disown
 ```
 
 ## Privileges
-
 ```bash
 sudo nano /etc/sudoers
 # Add the next line to allow the user 'pi' to sudo all commands without a password.
@@ -251,7 +237,6 @@ pi ALL=(ALL) NOPASSWD: ALL
 ```
 
 ## Filesystem
-
 ```bash
 # Get the number of files in each sub-directory in the directory you're currently in.
 find . -xdev -type d -print0 |
@@ -270,14 +255,12 @@ fdupes --recurse dir1 dir2
 ```
 
 ## Rsnapshot
-
 ```bash
 # View schedule of installed srnapshot configs.
 cat /etc/cron.d/rsnapshot
 ```
 
 ## Disable IPv6
-
 ```bash
 # Add the 'link-local' line at the position like in the example below.
 network:
@@ -290,7 +273,6 @@ sudo netplan apply
 ```
 
 ## Bash
-
 ```bash
 # The shebang.
 #!/bin/bash
@@ -365,10 +347,7 @@ _init
 _echo_h "rsyncBackupToBackup1WeeklyLocked.sh"
 ```
 
-
-
 ### Config File Parser
-
 ```bash
 # Configuration file parser.
 # Replace <NAME_OF_YOUR_PROGRAM>.
@@ -395,7 +374,6 @@ done < .$configfile.unix
 ```
 
 ### Example Config File
-
 ```bash
 # The dir where mysqlbu will be installed
 dir = /data/backup/mysqlbu
@@ -461,14 +439,12 @@ sudo apt -f install
 # running a viable installation of crome-remote-desktop with authentication...
 https://remotedesktop.google.com/headless/
 ```
-
 ### Chrome Browser
 ```bash
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt -f install
 ```
-
 ### Server Installation Script
 ```bash
 # docker...
@@ -509,7 +485,5 @@ find . -depth -type f -name "*${1}*" -exec rename -v "s/${1}/${2}/" {} +
 - https://remotedesktop.google.com/headless/
 - http://scode.github.io/docs/software/chrome_remote_desktop_ubuntu.html
 
-
 ## Remote Desktop Ubuntu - Windows
-
 https://askubuntu.com/a/592544

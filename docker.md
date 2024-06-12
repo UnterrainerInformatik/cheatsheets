@@ -1,11 +1,8 @@
 # Docker
-
 ## Installation
-
 ```bash
 sudo apt install docker.io
 ```
-
 ### Post Installation
 ```bash
 # post install general
@@ -30,10 +27,7 @@ sudo nano /etc/docker/daemon.json
 # where the IPs are from your DNS servers.
 # They will be used from within containers started on your host.
 ```
-
-
 ## Reload Start, Stop, Restart
-
 ```bash
 # reload config (.json config files)
 sudo systemctl daemon-reload
@@ -43,9 +37,7 @@ sudo systemctl stop docker
 # start daemon
 sudo systemctl start docker
 ```
-
 ## Move data-dir (/var/lib/docker)
-
 ```bash
 # Stop docker daemon
 sudo systemctl stop docker

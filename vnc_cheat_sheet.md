@@ -1,37 +1,27 @@
 # VNC/RDP/x2go on Linux
 
 ## Get the desktop environment you're currently using
-
 ```bash
 echo $XDG_CURRENT_DESKTOP
 # Tells you what Windows Manager you are using
 echo $GDMSESSION
 # Tells you what option you selected from the lightdm greeter to login.
 ```
-
-
-
 # x11vnc
-
 ## Server
-
 For a server we use `x11vnc` since it's the only server that is able to share your current desktop in an easy and understandable way.
 Other VNC-server implementations open another instance of another graphical user interface remotely for you.
 
 We use that without SSH since we only use VNC in our internal, controlled environment.
 However, tunneling the data over SSH is of cause possible given some extra configuration.
-
 ### Install Script
-
 #### Run 'as service' (persistent) installation
-
 Installs all from-scratch.
 
 Copy to a new sh-script. Give it execute permissions.
 Execute it WITH `sudo`!
 
 System will reboot!
-
 ```bash
 # ##################################################################
 # Script Name : vnc-startup.sh
@@ -85,7 +75,6 @@ systemctl try-restart x11vnc.service
 ```
 
 You may have to restart once for the changes to take effect.
-
 Restart the service manually:
 
 ```bash
@@ -96,9 +85,7 @@ For Ubuntu you have to switch to XOrg as window manager (the default is Wayland 
 For that to happen you have to log-out and then log-in again. On the login-screen, next to the login button, there is a cogwheel. When you select that, you can chose a window manager.
 
 ### Manual
-
 #### Manual Install
-
 ```bash
 # Install x11vnc
 sudo apt-get install x11vnc
@@ -107,9 +94,7 @@ sudo apt-get install x11vnc
 sudo mkdir ~/.vnc
 x11vnc -storepasswd <password> ~/.vnc/passwd
 ```
-
 #### Manual Test
-
 ```bash
 # Start the server to test it
 x11vnc -display :0
@@ -119,11 +104,7 @@ x11vnc -forever -ncache 10 -ncache_cr -display :0 -rfbauth ~/.vnc/passwd
 # Now go to the machine you're running a viewer on and enter your computer's network-address there with the port 5900. Example:
 10.66.66.150:5900
 ```
-
-
-
 ## Client
-
 It's best to install RealVNC from their website. It's the most advanced interface there is (and the most stable as well).
 ```bash
 # Go to their website
@@ -131,11 +112,7 @@ It's best to install RealVNC from their website. It's the most advanced interfac
 # Download it
 # And install it using your favorite package manager
 ```
-
-
-
 # XRDP
-
 ```bash
 sudo apt install xrdp
 # Check Installation
@@ -163,19 +140,13 @@ sudo cp /etc/xrdp/km-0409.ini /etc/xrdp/km-0409.ini.bak
 sudo xrdp-genkeymap km-0409.ini
 
 ```
-
-
-
 # x2go
-
 This remote desktop protocol is very fast. As far as I can tell it's proprietary and the best thing about is, that it works all over SSH.
 So it's pretty secure and access is granted by simply creating an SSH user.
 Rule of thumb is: If you can SSH to that machine via that user, you can x2go there too.
 
 The connecting user of course has to enter the user-credentials.
-
 ## Server
-
 ```bash
 # Add the x2go repository
 sudo add-apt-repository ppa:x2go/stable -y
@@ -193,9 +164,7 @@ sudo apt-get upgrade -y
 sudo apt-get autoremove -y
 sudo apt-get clean
 ```
-
 ## Client
-
 ```bash
 # Install x2go PPA
 sudo add-apt-repository ppa:x2go/stable

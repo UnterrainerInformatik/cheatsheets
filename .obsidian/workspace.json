@@ -1,0 +1,175 @@
+{
+  "main": {
+    "id": "66ba8c7b35d8c6ff",
+    "type": "split",
+    "children": [
+      {
+        "id": "77744110a855e4f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2d6b9cea1b5cc2c2",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "scheduled_hibernation.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "79d6f12eacc59f85",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "keycloak_update_from_pre_13.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4eaa67c48b1eb8ea",
+    "type": "split",
+    "children": [
+      {
+        "id": "d9ad51fb91233c76",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9ffeb56ca1a84b42",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "75d43ea4820b71dd",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "0e5f3b058e6479fc",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "76aca6da6631789d",
+    "type": "split",
+    "children": [
+      {
+        "id": "c2a09e66b27c7bb1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "775166d4741d99d9",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "keycloak_update_from_pre_13.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "503bde0011453a9c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "keycloak_update_from_pre_13.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "37a06a944ec280df",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "3b12a2f20ad3f4eb",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "keycloak_update_from_pre_13.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "79d6f12eacc59f85",
+  "lastOpenFiles": [
+    "scheduled_hibernation.md",
+    "keycloak_update_from_pre_13.md",
+    "ssh_cheat_sheet.md",
+    "vnc_cheat_sheet.md",
+    "ssl_cheat_sheet.md",
+    "docker.md",
+    "git_cheat_sheet_update.md",
+    "gpg_cheat_sheet.md",
+    "letsencrypt_cheat_sheet.md",
+    "linux_cheat_sheet.md"
+  ]
+}
