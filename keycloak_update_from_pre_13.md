@@ -118,13 +118,15 @@ You may now get rid of the command-parameters, which are no longer necessary:
     command: start
 ```
 
+If you run into troubles because your browser is still redirecting to `/auth` at login, then try clearing your browsers' cache and, if that doesn't help, start Keycloak once with the parameter `command: start --http-relative-path ""` to rebuild Keycloak correctly. After that you may remove that parameter again so that the command-line reads `command: start` again.
+
 The new version picks up the `KC_DB` flag again, which is why you don't need the db-flag any longer, although Keycloak rebuilds every time on startup.
 
 Of course this means, that you have to adapt all your clients now that you don't have the `http-relative-path` any more. But that should be expected, since this is a change to stay. It won't go away and your clients are better off if you fix this issue ASAP.
 Alternatively you could still append the flag, which would fix the URI, but your clients will still be broken, since so much has changed since the version you've upgraded from and now you have to update your clients anyway.
 
 ## Tidy up
-You now may get rid of all the commented-out lines in your `docker-compose.yml` and set the log-level to `info` again by specifying `- KC_LOG_LEVEL=debug`.
+You now may get rid of all the commented-out lines in your `docker-compose.yml` and set the log-level to `info` again by specifying `- KC_LOG_LEVEL=info`.
 
 ## Debugging Hostname Issues & Admin Console Name
 Add the following Quarkus-compiler-flag to your start-command in the `docker-compose.yml` file:
