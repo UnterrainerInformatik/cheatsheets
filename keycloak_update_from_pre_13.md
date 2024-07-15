@@ -5,11 +5,31 @@ Be sure to save your database, after shutting it down properly, between every st
 A local backup should suffice.
 
 Personally I did this using dockerized MariaDB and dockerized Keycloak, which made things much faster, which was a very welcome circumstance, since getting a nice path through this mess was mainly a trial-and-error process.
-
+Also, with this setup, the only place where changes in code will be manifested, is the mounted volume of the database, which makes saving and restoring, if something unexpected happens, a breeze.
+# Known Problems
+- none (till now)
 ## Upgrade to 13.0.1
 Shut down you database.
 Backup your database.
 First upgrade to image: quay.io/keycloak/keycloak:13.0.1 without changing the config at all.
+```bash
+# The images' repository has changed and is available here instead.
+# All future versions are available here as well.
+# Here is the start of a typical docker-compose.yml for a Keycloak installation:
+version: "3"
+services:
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:13.0.1
+    container_name: keycloak
+    restart: unless-stopped
+    depends_on:
+      - keycloak_db
+    ports:
+      - 12222:8080
+    environment:
+      # ...
+```
 Start it and see if the frontend starts correctly.
 Save the database.
 
@@ -18,6 +38,7 @@ Shut down you database.
 Backup your database.
 Then upgrade to image: quay.io/keycloak/keycloak:16.1.1 without changing the config.
 Start it and see if the frontend starts correctly.
+Ignore the errors in the log (something about `InfinispanAuthenticationSessionProvider`).
 Save the database.
 
 ## Upgrade to 18.0.2
@@ -69,8 +90,8 @@ This version is a mess as far as configuration is concerned... But don't worry, 
 ## Upgrade to latest
 Shut down you database.
 Backup your database.
-The latest Keycloak version as of this writing is `v25.0.0`.
-So update the version to `latest`.
+The latest Keycloak version as of this writing is `v25.0.1`.
+So update the version to `latest` (don't do this in production. Always fix your versions in production!).
 Then change the config to the new one:
 ```bash
 environment:
@@ -115,10 +136,10 @@ The reason for the GUI not working is because they've simply added the `/auth`-p
 You may now get rid of the command-parameters, which are no longer necessary:
 ```bash
 #    command: start --db=mariadb --http-relative-path /auth
-    command: start
+    command: start --http-relative-path ""
 ```
 
-If you run into troubles because your browser is still redirecting to `/auth` at login, then try clearing your browsers' cache and, if that doesn't help, start Keycloak once with the parameter `command: start --http-relative-path ""` to rebuild Keycloak correctly. After that you may remove that parameter again so that the command-line reads `command: start` again.
+If you run into troubles because your browser is still redirecting to `/auth` at login, then try clearing your browsers' cache and, if that doesn't help, start Keycloak once with the parameter `command: start --http-relative-path ""` to rebuild Keycloak correctly. After that you may remove that parameter again so that the command-line reads `command: start` again. But for me that didn't work and I had to keep the empty relative path in. Maybe I made a mistake and it works anyway.
 
 The new version picks up the `KC_DB` flag again, which is why you don't need the db-flag any longer, although Keycloak rebuilds every time on startup.
 
@@ -148,6 +169,12 @@ sudo cp -pr mysql-data/ mysql-data-save-16.1.1/
 ```
 
 ## Post-Upgrade Issues
+## Migrate your clients
+Almost all of your clients will have an OIDC-Address somewhere, that has the `/auth/` part in it. Remove that from all clients since the OIDC-Endpoints are no longer available there, but at the same URL without the `/auth/` part.
+## Migrate your servers
+Same for the servers. Get rid of the `/auth/` in the OIDC-URL.
+## Restart servers
+Since servers get a asymmetrical key from the Keycloak server on startup that they use in their communication with the Keycloak server, you need to re-initialize the communication between your servers and Keycloak, since those keys are no longer valid now. Your server has to get a new one; Hence the restart.
 ## Migrate your login-themes
 The directory your themes should be located in has changed from `/opt/jboss/keycloak/themes` to `/opt/keycloak/themes`, so change your volume mapping accordingly.
 As far as I know nothing substantial has changed otherwise regarding themes, but I only used a login-theme. So I know nothing about the other ones. The templating engine hasn't changed for sure.
