@@ -168,6 +168,8 @@ Save/Reload Database:
 ```bash
 # cd to the volume mapping, then
 sudo cp -pr mysql-data/ mysql-data-save-16.1.1/
+# Test the keycloak instance using only cURL
+curl -d 'client_id=xxx' -d 'username=xxx' -d 'password=xxx' -d 'grant_type=password' 'https://keycloak.lan.co.at/realms/Cms/protocol/openid-connect/token'
 ```
 
 ## Post-Upgrade Issues
