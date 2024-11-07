@@ -161,8 +161,8 @@ KEYCLOAK_BASE_URL/realms/master/hostname-debug
 ```
 [Documentation](https://www.keycloak.org/server/hostname#_troubleshooting)
 ## User Federation an errors
-If you've used user federation, the chances are that your setup won't be migrated gracefully. The most common error is that `validateUserPolicy` is enabled or that `writeMode` is not set.
-In that case you'll have to go to the database and query the table `components` for `ldap` and then search for the fields in `component_config` and set them correctly.
+If you've used user federation, the chances are that your setup won't be migrated gracefully. The most common error is that `validateUserPolicy` is enabled or that `writeMode` (or `editMode`) is not set.
+In that case you'll have to go to the database and query the table `components` for `ldap` and then search for the fields in `component_config` and set them correctly. If `editMode` doesn't exist, then create it with the value `READ_ONLY`. This cannot be null (or not existent).
 ## Useful Commands
 Save/Reload Database:
 ```bash
