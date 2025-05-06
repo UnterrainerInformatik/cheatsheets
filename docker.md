@@ -1,17 +1,29 @@
 # Docker
 ## Installation
 ```bash
-sudo apt install docker.io
+sudo apt update -y
+sudo apt install -y docker.io
 ```
 ### Post Installation
 ```bash
-# post install general
+# docker...
 sudo groupadd docker
 sudo usermod -aG docker $USER
-# next one is to avoid a re-login
 newgrp docker
 docker run hello-world
 sudo systemctl enable docker
+# docker-compose (new v2... ditch the docker-compose command and use 'docker compose' instead)...
+sudo apt install -y docker-compose-v2
+# docker-compose to compose v2 compatibility
+# One solution I've come up with is to create a little script.
+sudo nano /bin/docker-compose
+# enter this:
+docker compose --compatibility "$@"
+# then
+sudo chmod +x /bin/docker-compose
+# ctop...
+sudo curl -Lo /usr/local/bin/ctop https://github.com/bcicen/ctop/releases/download/v0.7.7/ctop-0.7.7-linux-amd64
+sudo chmod +x /usr/local/bin/ctop
 
 # post-install to run prune periodically
 sudo crontab -e
